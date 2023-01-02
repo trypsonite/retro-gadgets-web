@@ -2,8 +2,7 @@
 
 ## Basic usage
 
-Make sure you have a security chip, a wifi chip and a CPU on your gadget, then
-configure your gadget's security permissions to allow your gadget to send and receive network data.
+Make sure you have a wifi chip and a CPU on your gadget, then configure your gadget's security permissions to allow your gadget to send and receive network data.
 
 Import `web.lua` into RetroGadgets asset list, or copy/paste the contents of it into a lua asset with the same name.
 
@@ -29,4 +28,21 @@ local request: Web.Request = web.get(
         end
     end
 )
+```
+
+Alternatively, you can leave out the callback and check the status of the request in the `update()` function:
+
+```lua
+local request: Web.Request = web.get("https://example.com")
+
+function update()
+    if request.ready then
+        local result: Web.Result = request.result
+        if result.ok then
+            print(result.text) -- do something with the data
+        else
+            print(result.errorMessage) -- handle error
+        end
+    end
+end
 ```
